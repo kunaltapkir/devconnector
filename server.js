@@ -16,12 +16,15 @@ mongoose
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
-app.get('/', (req, res) => res.send('Hello World'));
+//Init Middleware
+app.use(express.json({ extended: false }));
+
+app.get('/', (req, res) => res.send('API running'));
 
 //Use routes
-app.use('/api/users', users);
-app.use('/api/profile', profile);
-app.use('/api/posts', posts);
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/profile', require('./routes/api/profile'));
+app.use('/api/posts', require('./routes/api/posts'));
 
 const port = process.env.PORT || 5000;
 
